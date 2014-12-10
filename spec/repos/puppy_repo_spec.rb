@@ -2,12 +2,16 @@ require_relative '../spec_helper.rb'
 
 describe PuppyBreeder::Repos::Puppies do
   let(:puppies){ PuppyBreeder::Repos::Puppies.new }
-  let(:poodle){ PuppyBreeder::Breed.new({
+  let(:breeds){ PuppyBreeder::Repos::Breeds.new }
+  let(:poodle){ breeds.create({
       name: 'poodle'
     })
   }
   before(:each){ 
-    
+    puppies.drop_table
+    breeds.drop_table
+    puppies.create_table
+    breeds.create_table
   }
 
   describe 'create' do

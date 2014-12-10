@@ -48,7 +48,6 @@ module PuppyBreeder::Repos
       command = <<-SQL
       SELECT * FROM breeds WHERE name = '#{name}'
       SQL
-
       result = @db.exec(command)
       result.map { |x| build_breed(x) } 
     end  

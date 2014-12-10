@@ -7,7 +7,7 @@ module PuppyBreeder
     def initialize(params)
       @customer = params[:customer]
       @breed = params[:breed]
-      @status = 'pending'
+      @status = params[:status] || 'pending'
       @puppy = nil
     end
   end

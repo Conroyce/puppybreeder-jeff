@@ -1,19 +1,27 @@
 require_relative '../spec_helper.rb'
 
 describe PuppyBreeder::Breeder do
+  let(:breeds){ PuppyBreeder::Repos::Breeds.new }
+  let(:puppies){ PuppyBreeder::Repos::Puppies.new }
   let(:jimmy){ PuppyBreeder::Breeder.new({
       name: 'Jimmy'
     })
   }
-  let(:pit_bull){ PuppyBreeder::Breed.new({
+  let(:pit_bull){ breeds.create({
       name: 'pit bull',
       price: 1000
     })
   }
-  let(:brutus){ PuppyBreeder::Puppy.new({
+  let(:brutus){ puppies.create({
       name: 'Brutus',
       breed: pit_bull
     })
+  }
+  before(:each){
+    breeds.drop_table
+    puppies.drop_table
+    breeds.create_table
+    puppies.create_table
   }
 
   describe 'initialize' do

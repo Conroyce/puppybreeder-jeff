@@ -1,7 +1,33 @@
 module PuppyBreeder::Repos
   class Requests < Repo
-    def initialize
-      @requests = {}
+    # def initialize
+    #   @requests = {}
+    # end
+
+    def create_table
+      command = <<-SQL
+        CREATE TABLE if not exists requests(
+          id SERIAL PRIMARY KEY,
+          customer text,
+          breed text,
+          status text,
+          puppy text
+       );
+      SQL
+      result = @db.exec(command)
+    end  
+
+    def drop_table
+      command = <<-SQL
+        DROP TABLE if exists requests
+      SQL
+      result = @db.exec(command)
+    end  
+
+    def create(params)
+      customer = params[:customer]
+      request = PuppyBreeder::PurchaseRequest.new(params)
+      
     end
 
     def create(params)
@@ -9,6 +35,19 @@ module PuppyBreeder::Repos
       key = customer.to_sym
       request = PuppyBreeder::PurchaseRequest.new(params)
       @requests[key] = request
+    end
+
+    def build_request(params)
+      customer = params[:customer]
+      breed = params[:breed]
+      status = params[:status]
+      puppy = params[:puppy]
+      PuppyBreeder::PurchaseRequest.new({
+        customer: customer,
+        breed: breed,
+        status: status,
+        puppy: puppy
+      })
     end
 
     def update(params)

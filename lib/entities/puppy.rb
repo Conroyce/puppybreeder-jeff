@@ -7,7 +7,8 @@ module PuppyBreeder
     def initialize(params)
       @name = params[:name]
       @breed = params[:breed]
-      @status = 'available'
+      @status = params[:status] || 'available'
+      @id = params[:id]
     end
   end
 end
